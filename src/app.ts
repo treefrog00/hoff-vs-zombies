@@ -178,7 +178,7 @@ class PlayGame extends Phaser.State {
     zombies: Phaser.Group;
     nextZombieTime: number;
     firstZombieDelay = 3000;
-    nextZombieDelay: number;
+    nextZombieDelay = 3300;
     zombiesEvaded: number;
     scoreText : Phaser.Text;
     //use two spaces on purpose
@@ -202,7 +202,6 @@ class PlayGame extends Phaser.State {
     var spawnZombies = () => {
       if (this.nextZombieTime < this.time.now) {
         this.nextZombieTime = this.time.now + this.nextZombieDelay;
-        this.nextZombieDelay *= 1.2;
         //don't spawn on top of the Hoff
         var x;
         do
