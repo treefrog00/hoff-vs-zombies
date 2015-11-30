@@ -1,0 +1,22 @@
+{
+  "name": "hoff-vs-zombines",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc -p src -w",
+    "start": "live-server --open=src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pebblecode/HoffVsZombies.git"
+  },
+  "author": "",
+  "devDependencies": {
+    "live-server": "^0.8.2",
+    "typescript": "1.6.2"
+  },
+  "dependencies": {
+    "phaser": "2.4.4"
+  }
+}
