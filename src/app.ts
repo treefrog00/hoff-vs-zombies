@@ -18,6 +18,7 @@ class Preload extends Phaser.State {
       this.load.image('zombie', 'images/zombies.png');
       this.load.image('hoff', 'images/hoff01.png');
       this.load.image('hoff-dead', 'images/hoff-dead.png');
+      //I repeatedly tried exporting the music as ogg with Audacity, but it always had lots of glitches when played in Chome. The ogg was fine in Firefox though. So using MP3 for this file ¯\_(ツ)_/¯
       this.load.audio('mitch-murder', 'https://dl.dropboxusercontent.com/u/4898984/Mitch%20Murder%20-%20Knight%20Rider%20Theme.mp3');
       this.load.audio('lana-del-ray','https://dl.dropboxusercontent.com/u/4898984/Summertime%20Sadness%20%2880s%20-%20synthwave%20version%29.ogg');
   }
@@ -41,8 +42,7 @@ class GameIntro extends Phaser.State {
         this.music.stop();
       var musicResource = this.nextMitchMurder ? 'mitch-murder' : 'lana-del-ray';
       this.music = this.game.add.audio(musicResource);
-      //if (document.location.hostname != "127.0.0.1" && document.location.hostname != "localhost")
-        this.music.loopFull();
+      this.music.loopFull();
       this.nextMitchMurder = !this.nextMitchMurder;
     }
     else {
@@ -112,11 +112,6 @@ class Hoff extends Phaser.Sprite {
     else if (this.cursors.down.isDown)
     {
         this.body.velocity.y = 150;
-    }
-
-    if (this.cursors.up.isDown && this.body.touching.down)
-    {
-        this.body.velocity.y = -350;
     }
 
     maybeHorizontalFlip(this);
