@@ -18,11 +18,14 @@ class Preload extends Phaser.State {
       this.load.image('zombie', 'images/zombies.png');
       this.load.image('hoff', 'images/hoff01.png');
       this.load.image('hoff-dead', 'images/hoff-dead.png');
+      this.load.audio('music', 'https://dl.dropboxusercontent.com/u/4898984/Mitch%20Murder%20-%20Knight%20Rider%20Theme.ogg');
   }
   
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.stage.backgroundColor = '#ffffcc';   
+    var music = this.game.add.audio('music');
+    music.play();
     this.game.state.start('GameIntro'); 
   }  
 }
@@ -87,7 +90,7 @@ class Hoff extends Phaser.Sprite {
         this.body.velocity.y = -350;
     }
     
-    var newFacingLeft = this.body.velocity.x < 0;
+    var newFacingLeft = this.body.velocity.x < 0 || (this.facingLeft &&  this.body.velocity.x == 0 );
     if (newFacingLeft != this.facingLeft)
       this.scale.x = -this.scale.x;
     this.facingLeft = newFacingLeft;
@@ -140,7 +143,7 @@ class Zombie extends Phaser.Sprite {
       this.body.velocity.y = Math.sin(this.moveAngle) * this.SPEED;
       
       //should extract this to shared function
-      var newFacingLeft = this.body.velocity.x < 0;
+      var newFacingLeft = this.body.velocity.x < 0 || (this.facingLeft &&  this.body.velocity.x == 0 );
       if (newFacingLeft != this.facingLeft)
         this.scale.x = -this.scale.x;
       this.facingLeft = newFacingLeft;
@@ -154,12 +157,12 @@ class PlayGame extends Phaser.State {
     nextZombieTime = 3000;
     zombieDelay = 5000;
     
-  create() {
-    this.hoff = new Hoff(this.game, 400, this.game.world.height - 200);    
+  create() {      
     this.game.physics.arcade.bounds.y = 100;
     this.game.physics.arcade.bounds.height = this.game.world.height - 100;    
     this.zombies = this.game.add.group(); 
-    this.zombies.enableBody = true;   
+    this.zombies.enableBody = true;
+    this.hoff = new Hoff(this.game, 400, this.game.world.height - 200);
   }
     
   update() {  
@@ -194,7 +197,7 @@ class GameOver extends Phaser.State {
   text: Phaser.Text;
   textTurnStart: number;
   TEXT_TURN_RATE = 0.2;
-  TEXT_TURN_DURATION = 1100;
+  TEXT_TURN_DURATION = 1600;
   
   create() {
     
@@ -207,11 +210,14 @@ class GameOver extends Phaser.State {
     this.text = this.game.add.text(this.game.world.centerX, 250, 'GAME OVER!', style);
     this.text.anchor.set(0.5);
     this.text.align = 'center';
+    this.text.scale.setTo(0.01, 0.01)
     this.text.setShadow(5, 5, 'rgba(0, 0, 0, 0.5)', 2);
     this.textTurnStart = this.time.now;
-    
+    //TODO more crazy zoom bounce
+    this.game.add.tween(this.text.scale).to({ x: 1.3, y: 1.3 }, 2000, Phaser.Easing.Bounce.Out, true);
+     
     this.input.keyboard.onDownCallback = () => {
-      //this line shouldn't just be copy-pasted
+      //TODO this line shouldn't be copy-pasta
       if (this.time.now > (this.textTurnStart + this.TEXT_TURN_DURATION)) {
         this.input.keyboard.onDownCallback = null;
         this.game.state.start('GameIntro', true, false);
@@ -220,12 +226,9 @@ class GameOver extends Phaser.State {
   }
   
   update() {
+    //TODO this line shouldn't be copy-pasta
     if (this.time.now < (this.textTurnStart + this.TEXT_TURN_DURATION))
-    {
-      //TODO make it repeatedly zoom in and out as well
       this.text.rotation += this.TEXT_TURN_RATE;
-      return;
-    }
   }
 }
 
