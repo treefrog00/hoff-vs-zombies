@@ -1,10 +1,20 @@
 <html>
 <head>
     <title>Hoff vs Zombies</title>
+    <style>
+    @font-face {
+     font-family: "arcade";
+     /* should probably use a more open format */
+     src: url("fonts/ARCADECLASSIC.ttf") format('truetype');
+     font-weight:bold;
+     font-style:normal;
+  }
+    </style>
     <link rel="stylesheet" href="app.css" type="text/css" />
     <script src="phaser.min.js"></script>
     <script src="app.js"></script>
 </head>
 <body>
+<div style="font-family: arcade;color:white">use font before it is needed by Canvas, otherwise the first time it is used it won't have been loaded yet, and I couldn't be bothered with font loading libraries</div>
 </body>
 </html>
