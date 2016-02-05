@@ -2,6 +2,7 @@
   "name": "hoff-vs-zombines",
   "version": "0.0.1",
   "description": "",
+  "license": "WTFPL",
   "main": "index.js",
   "scripts": {
     "tsc": "tsc -p src -w",
