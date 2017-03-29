@@ -19,8 +19,8 @@ class Preload extends Phaser.State {
       this.load.image('hoff', 'images/hoff01.png');
       this.load.image('hoff-dead', 'images/hoff-dead.png');
       //I repeatedly tried exporting the music as ogg with Audacity, but it always had lots of glitches when played in Chome. The ogg was fine in Firefox though. So using MP3 for this file ¯\_(ツ)_/¯
-      this.load.audio('mitch-murder', 'https://dl.dropboxusercontent.com/u/4898984/Mitch%20Murder%20-%20Knight%20Rider%20Theme.mp3');
-      this.load.audio('lana-del-ray','https://dl.dropboxusercontent.com/u/4898984/Summertime%20Sadness%20%2880s%20-%20synthwave%20version%29.ogg');
+      this.load.audio('mitch-murder', 'sounds/Mitch%20Murder%20-%20Knight%20Rider%20Theme.mp3');
+      this.load.audio('lana-del-ray','sounds/Summertime%20Sadness%20%2880s%20-%20synthwave%20version%29.ogg');
   }
 
   create() {
