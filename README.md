@@ -1,5 +1,7 @@
 Hoff vs Zombies
 
+Run with `npm i && npm run tsc && npm start`, no fancy build system here.
+
 Simple game using Phaser and Typescript.
 
 Art assets and game name stolen from https://github.com/pebblecode/HoffVsZombies

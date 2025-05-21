@@ -34,8 +34,18 @@ class GameIntro extends Phaser.State {
   nextMitchMurder = true;
   playsRemaining = 0;
   music : Phaser.Sound;
+  background: Phaser.Sprite;
 
   create() {
+    this.background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
+    this.background.anchor.setTo(0.5, 0.5);
+    this.background.scale.setTo(0.1, 0.1);
+
+    // Add click/tap handler to start the game
+    this.game.input.onDown.add(this.startGame, this);
+  }
+
+  startGame() {
     if (this.playsRemaining == 0) {
       this.playsRemaining = 2;
       if (this.music)
@@ -49,19 +59,11 @@ class GameIntro extends Phaser.State {
       this.playsRemaining--;
     }
 
-    var background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
-    background.anchor.setTo(0.5, 0.5);
-    background.scale.setTo(0.1, 0.1);
-
-    var playGame = () => {
-
-       this.game.state.start('PlayGame', false, false);
-    }
-
-    var zoomStart = this.game.add.tween(background.scale).to({ x: 0.2, y: 0.2 }, 2000, Phaser.Easing.Bounce.Out, true);
-    zoomStart.onComplete.add(playGame);
+    var zoomStart = this.game.add.tween(this.background.scale).to({ x: 0.2, y: 0.2 }, 2000, Phaser.Easing.Bounce.Out, true);
+    zoomStart.onComplete.add(() => {
+      this.game.state.start('PlayGame', false, false);
+    });
   }
-
 }
 
 interface FlippableSprite extends Phaser.Sprite {
